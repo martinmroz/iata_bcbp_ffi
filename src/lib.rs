@@ -3,6 +3,11 @@
 // This software may be modified and distributed under the terms
 // of the MIT license.  See the LICENSE file for details.
 
+//! iata_bcbp_ffi is a set of FFI bindings for the iata_bcbp library.
+//! The library support reading 'M' type IATA BCBP pass data and
+//! supports all the fields defined in version 6 of the standard as
+//! defined in IATA Resolution 792.
+
 extern crate iata_bcbp;
 extern crate libc;
 
