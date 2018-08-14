@@ -8,7 +8,7 @@ exposing C bindings for all features of the `iata_bcbp` library in addition
 to an automatically generated header `iata_bcbp_ffi.h`.
 
 ### Building for iOS
-Follow the latest steps for intalling `cargo-lipo`.
+Follow the latest steps for intalling and building with `cargo-lipo`.
 
 ## License
 
