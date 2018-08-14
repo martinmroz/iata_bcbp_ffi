@@ -2,5 +2,14 @@
 name = "iata_bcbp_ffi"
 version = "0.1.0"
 authors = ["Martin Mroz <martinmroz@gmail.com>"]
+build = "build.rs"
+
+[lib]
+crate-type = ["staticlib"]
 
 [dependencies]
+iata_bcbp = { git = "ssh://git@github.com/martinmroz/iata_bcbp" }
+libc = "0.2"
+
+[build-dependencies]
+cbindgen = "0.6"
