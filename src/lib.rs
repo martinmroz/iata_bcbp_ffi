@@ -11,11 +11,13 @@
 extern crate iata_bcbp;
 extern crate libc;
 
+use std::collections::hash_map::DefaultHasher;
 use std::ffi;
+use std::hash::{Hash, Hasher};
 use std::ptr;
 use std::str::FromStr;
 
-use libc::{c_char, c_int};
+use libc::{c_char, c_int, uint64_t};
 
 use iata_bcbp::Bcbp;
 
@@ -28,7 +30,7 @@ use iata_bcbp::Bcbp;
 ///
 /// # Safety
 ///
-/// Make sure you destroy the object with [`bcbp_destroy()`] once you are
+/// Make sure you destroy the object with [`BcbpDestroy()`] once you are
 /// done with it.
 ///
 /// [`BcbpDestroy()`]: fn.BcbpDestroy.html
@@ -56,6 +58,86 @@ pub unsafe extern "C" fn BcbpCreateWithCString(input: *const c_char) -> *mut Bcb
     }
 }
 
+/// Construct a new `Bcbp` by copying the receiver.
+/// 
+/// # Note
+/// 
+/// If the receiver is a null pointer, this will return a null pointer.
+///
+/// # Safety
+///
+/// Make sure you destroy the object with [`BcbpDestroy()`] once you are
+/// done with it.
+///
+/// [`BcbpDestroy()`]: fn.BcbpDestroy.html
+#[no_mangle]
+pub unsafe extern "C" fn BcbpCreateCopy(bcbp_ptr: *const Bcbp) -> *mut Bcbp {
+    if bcbp_ptr.is_null() {
+        ptr::null_mut()
+    } else {
+        Box::into_raw(Box::new((&*bcbp_ptr).clone()))
+    }
+}
+
+/// Computes the hash of the receiver.
+/// 
+/// # Note
+/// 
+/// If the receiver is a null pointer, this will return 0.
+#[no_mangle]
+pub unsafe extern "C" fn BcbpHash(bcbp_ptr: *const Bcbp) -> uint64_t {
+    if bcbp_ptr.is_null() {
+        0
+    } else {
+        let mut s = DefaultHasher::new();
+        (&*bcbp_ptr).hash(&mut s);
+        s.finish()
+    }
+}
+
+/// Checks that two Bcbp instances are equal.
+/// 
+/// # Note
+/// 
+/// Returns `true` if both `lhs` and `rhs` are `NULL`.
+/// Otherwise, returns `false` if either the `lhs` or `rhs` are `NULL`.
+#[no_mangle]
+pub unsafe extern "C" fn BcbpEqual(lhs: *const Bcbp, rhs: *const Bcbp) -> bool {
+    if lhs == rhs {
+        true
+    } else if lhs == ptr::null() || rhs == ptr::null() {
+        false
+    } else {
+        (&*lhs) == (&*rhs)
+    }
+}
+
+/// Returns the debug description of the receiver.
+/// 
+/// # Note
+/// 
+/// If the receiver is a null pointer, this will return a null pointer.
+///
+/// # Safety
+///
+/// Make sure you destroy the result with [`BcbpDestroyString()`] once you are
+/// done with it.
+///
+/// [`BcbpDestroyString()`]: fn.BcbpDestroyString.html
+#[no_mangle]
+pub unsafe extern "C" fn BcbpCopyDebugDesc(bcbp_ptr: *const Bcbp) -> *mut c_char {
+    if bcbp_ptr.is_null() {
+        ptr::null_mut()
+    } else {
+        let bcbp = &*bcbp_ptr;
+        let debug_desc = format!("{:?}", bcbp);
+
+        ffi::CString::new(debug_desc)
+            .map(ffi::CString::into_raw)
+            .unwrap_or(ptr::null_mut())
+    }
+}
+
 /// Destroy a `Bcbp` once you are done with it.
 #[no_mangle]
 pub unsafe extern "C" fn BcbpDestroy(bcbp_ptr: *mut Bcbp) {
@@ -78,7 +160,7 @@ pub unsafe extern "C" fn BcbpDestroyString(string: *mut c_char) {
 ///
 /// If the `Bcbp` object provided is null, this will return 0.
 #[no_mangle]
-pub unsafe extern "C" fn BcbpGetNumberOfLegs(bcbp_ptr: *mut Bcbp) -> c_int {
+pub unsafe extern "C" fn BcbpGetNumberOfLegs(bcbp_ptr: *const Bcbp) -> c_int {
     if bcbp_ptr.is_null() {
         0
     } else {
@@ -146,7 +228,7 @@ pub const kBcbpFieldIdSecondNonConsecutiveBaggageTagLicensePlateNumbers: c_int =
 /// _: Handle failure to coerce an &str into a CString differently, consider a panic.
 /// _: Return a specific error in the event an invalid field is provided.
 #[no_mangle]
-pub unsafe extern "C" fn BcbpCopyField(bcbp_ptr: *mut Bcbp, field_id: BcbpFieldId) -> *mut c_char {
+pub unsafe extern "C" fn BcbpCopyField(bcbp_ptr: *const Bcbp, field_id: BcbpFieldId) -> *mut c_char {
     if bcbp_ptr.is_null() {
         return ptr::null_mut();
     }
@@ -220,7 +302,7 @@ pub const kBcbpSecurityFieldIdSecurityData: c_int = 2;
 /// _: Handle failure to coerce an &str into a CString differently, consider a panic.
 /// _: Return a specific error in the event an invalid field is provided.
 #[no_mangle]
-pub unsafe extern "C" fn BcbpCopySecurityField(bcbp_ptr: *mut Bcbp, field_id: BcbpSecurityFieldId) -> *mut c_char {
+pub unsafe extern "C" fn BcbpCopySecurityField(bcbp_ptr: *const Bcbp, field_id: BcbpSecurityFieldId) -> *mut c_char {
     if bcbp_ptr.is_null() {
         return ptr::null_mut();
     }
@@ -335,7 +417,7 @@ pub const kBcbpFlightLegFieldIdAirlineIndividualUse: c_int = 20;
 /// _: Return a specific error in the event an invalid field is provided.
 /// _: Return a specific error in the event an invalid leg is provided.
 #[no_mangle]
-pub unsafe extern "C" fn BcbpCopyFlightLegField(bcbp_ptr: *mut Bcbp, leg: c_int, field_id: BcbpFlightLegFieldId) -> *mut c_char {
+pub unsafe extern "C" fn BcbpCopyFlightLegField(bcbp_ptr: *const Bcbp, leg: c_int, field_id: BcbpFlightLegFieldId) -> *mut c_char {
     if bcbp_ptr.is_null() {
         return ptr::null_mut();
     }

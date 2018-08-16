@@ -5,10 +5,10 @@ authors = ["Martin Mroz <martinmroz@gmail.com>"]
 build = "build.rs"
 
 [lib]
-crate-type = ["lib", "staticlib", "cdylib"]
+crate-type = ["lib", "staticlib"]
 
 [dependencies]
-iata_bcbp = { git = "ssh://git@github.com/martinmroz/iata_bcbp" }
+iata_bcbp = "0.1"
 libc = "0.2"
 
 [build-dependencies]
