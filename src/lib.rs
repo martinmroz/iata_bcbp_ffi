@@ -17,9 +17,8 @@ use std::hash::{Hash, Hasher};
 use std::ptr;
 use std::str::FromStr;
 
-use libc::{c_char, c_int, uint64_t};
-
 use iata_bcbp::Bcbp;
+use libc::{c_char, c_int};
 
 /// Construct a new `Bcbp` by parsing the provided input string.
 /// 
@@ -63,6 +62,7 @@ pub unsafe extern "C" fn BcbpCreateWithCString(input: *const c_char) -> *mut Bcb
 /// # Note
 /// 
 /// If the receiver is a null pointer, this will return a null pointer.
+/// If the receiver is a valid Bcbp instance, a new instance will be returned.
 ///
 /// # Safety
 ///
@@ -85,7 +85,7 @@ pub unsafe extern "C" fn BcbpCreateCopy(bcbp_ptr: *const Bcbp) -> *mut Bcbp {
 /// 
 /// If the receiver is a null pointer, this will return 0.
 #[no_mangle]
-pub unsafe extern "C" fn BcbpHash(bcbp_ptr: *const Bcbp) -> uint64_t {
+pub unsafe extern "C" fn BcbpHash(bcbp_ptr: *const Bcbp) -> u64 {
     if bcbp_ptr.is_null() {
         0
     } else {

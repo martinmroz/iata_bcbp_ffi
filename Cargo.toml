@@ -1,6 +1,6 @@
 [package]
 name = "iata_bcbp_ffi"
-version = "0.1.0"
+version = "1.0.0"
 authors = ["Martin Mroz <martinmroz@gmail.com>"]
 build = "build.rs"
 
@@ -8,8 +8,9 @@ build = "build.rs"
 crate-type = ["lib", "staticlib"]
 
 [dependencies]
-iata_bcbp = "0.1"
+iata_bcbp = "1.0"
 libc = "0.2"
 
 [build-dependencies]
-cbindgen = "0.6"
+serde_derive = "=1.0.34"
+cbindgen = "0.9"
