@@ -11,7 +11,7 @@ use std::path::PathBuf;
 pub fn main() {
     let crate_dir = env::var("CARGO_MANIFEST_DIR").unwrap();
 
-    // Find the location of the `target/` directory. Note that this may be 
+    // Find the location of the `target/` directory. Note that this may be
     // overridden by `cmake`, so we also need to check the `CARGO_TARGET_DIR` variable.
     let target_dir = {
         if let Ok(target) = env::var("CARGO_TARGET_DIR") {
@@ -27,7 +27,7 @@ pub fn main() {
         .join(format!("{}.h", package_name))
         .display()
         .to_string();
-    
+
     cbindgen::generate(crate_dir)
         .expect("Unable to generate C bindings")
         .write_to_file(&output_file);

@@ -21,9 +21,9 @@ use iata_bcbp::Bcbp;
 use libc::{c_char, c_int};
 
 /// Construct a new `Bcbp` by parsing the provided input string.
-/// 
+///
 /// # Note
-/// 
+///
 /// If the string passed in isn't a valid BCBP Type 'M' data string
 /// this will return a null pointer.
 ///
@@ -33,7 +33,7 @@ use libc::{c_char, c_int};
 /// done with it.
 ///
 /// [`BcbpDestroy()`]: fn.BcbpDestroy.html
-/// 
+///
 /// # Issues
 /// _: Return an error if parse fails instead of `null`.
 #[no_mangle]
@@ -58,9 +58,9 @@ pub unsafe extern "C" fn BcbpCreateWithCString(input: *const c_char) -> *mut Bcb
 }
 
 /// Construct a new `Bcbp` by copying the receiver.
-/// 
+///
 /// # Note
-/// 
+///
 /// If the receiver is a null pointer, this will return a null pointer.
 /// If the receiver is a valid Bcbp instance, a new instance will be returned.
 ///
@@ -80,9 +80,9 @@ pub unsafe extern "C" fn BcbpCreateCopy(bcbp_ptr: *const Bcbp) -> *mut Bcbp {
 }
 
 /// Computes the hash of the receiver.
-/// 
+///
 /// # Note
-/// 
+///
 /// If the receiver is a null pointer, this will return 0.
 #[no_mangle]
 pub unsafe extern "C" fn BcbpHash(bcbp_ptr: *const Bcbp) -> u64 {
@@ -96,9 +96,9 @@ pub unsafe extern "C" fn BcbpHash(bcbp_ptr: *const Bcbp) -> u64 {
 }
 
 /// Checks that two Bcbp instances are equal.
-/// 
+///
 /// # Note
-/// 
+///
 /// Returns `true` if both `lhs` and `rhs` are `NULL`.
 /// Otherwise, returns `false` if either the `lhs` or `rhs` are `NULL`.
 #[no_mangle]
@@ -113,9 +113,9 @@ pub unsafe extern "C" fn BcbpIsEqual(lhs: *const Bcbp, rhs: *const Bcbp) -> bool
 }
 
 /// Returns the debug description of the receiver.
-/// 
+///
 /// # Note
-/// 
+///
 /// If the receiver is a null pointer, this will return a null pointer.
 ///
 /// # Safety
@@ -155,7 +155,7 @@ pub unsafe extern "C" fn BcbpDestroyString(string: *mut c_char) {
 }
 
 /// Returns the number of legs encoded within a boarding pass.
-/// 
+///
 /// # Note
 ///
 /// If the `Bcbp` object provided is null, this will return 0.
@@ -224,7 +224,7 @@ pub enum BcbpFieldId {
 /// [`BcbpDestroyString()`]: fn.BcbpDestroyString.html
 #[no_mangle]
 pub unsafe extern "C" fn BcbpCopyField(
-    bcbp_ptr: *const Bcbp, 
+    bcbp_ptr: *const Bcbp,
     field_id: BcbpFieldId,
     result: *mut *mut c_char,
     length: *mut usize,
@@ -295,7 +295,7 @@ pub enum BcbpSecurityFieldId {
 }
 
 /// Returns a copy of the specified security data field.
-/// 
+///
 /// # Note
 ///
 /// If the `Bcbp` object provided is null, this will return `false`.
@@ -318,7 +318,7 @@ pub enum BcbpSecurityFieldId {
 /// [`BcbpDestroyString()`]: fn.BcbpDestroyString.html
 #[no_mangle]
 pub unsafe extern "C" fn BcbpCopySecurityField(
-    bcbp_ptr: *const Bcbp, 
+    bcbp_ptr: *const Bcbp,
     field_id: BcbpSecurityFieldId,
     result: *mut *mut c_char,
     length: *mut usize,
@@ -428,13 +428,13 @@ pub enum BcbpFlightLegFieldId {
 /// otherwise undefined behavior will ensue.
 ///
 /// [`BcbpDestroyString()`]: fn.BcbpDestroyString.html
-/// 
+///
 /// # Issues
 /// _: Return a specific error in the event an invalid leg is provided.
 #[no_mangle]
 pub unsafe extern "C" fn BcbpCopyFlightLegField(
-    bcbp_ptr: *const Bcbp, 
-    leg: c_int, 
+    bcbp_ptr: *const Bcbp,
+    leg: c_int,
     field_id: BcbpFlightLegFieldId,
     result: *mut *mut c_char,
     length: *mut usize,
