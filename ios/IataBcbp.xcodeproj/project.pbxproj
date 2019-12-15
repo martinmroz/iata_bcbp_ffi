@@ -11,7 +11,7 @@
 		FD051F712125FA0400D2B73A /* IBBoardingPass.m in Sources */ = {isa = PBXBuildFile; fileRef = FD051F6F2125FA0400D2B73A /* IBBoardingPass.m */; };
 		FD051F762126024200D2B73A /* NSString+Bcbp.h in Headers */ = {isa = PBXBuildFile; fileRef = FD051F742126024200D2B73A /* NSString+Bcbp.h */; };
 		FD051F772126024200D2B73A /* NSString+Bcbp.m in Sources */ = {isa = PBXBuildFile; fileRef = FD051F752126024200D2B73A /* NSString+Bcbp.m */; };
-		FD2C975923A5E50B002370F2 /* IBBoardingPassLeg.h in Headers */ = {isa = PBXBuildFile; fileRef = FD2C975723A5E50A002370F2 /* IBBoardingPassLeg.h */; };
+		FD2C975923A5E50B002370F2 /* IBBoardingPassLeg.h in Headers */ = {isa = PBXBuildFile; fileRef = FD2C975723A5E50A002370F2 /* IBBoardingPassLeg.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FD2C975A23A5E50B002370F2 /* IBBoardingPassLeg.m in Sources */ = {isa = PBXBuildFile; fileRef = FD2C975823A5E50B002370F2 /* IBBoardingPassLeg.m */; };
 		FD2C975C23A5E524002370F2 /* IBBoardingPassLeg_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = FD2C975B23A5E524002370F2 /* IBBoardingPassLeg_Private.h */; };
 		FD4788552125F560000B8A5D /* IataBcbp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD47884B2125F560000B8A5D /* IataBcbp.framework */; };
@@ -20,7 +20,7 @@
 		FDC652372129304E00F1BCD7 /* NSDate+Bcbp.h in Headers */ = {isa = PBXBuildFile; fileRef = FDC652352129304E00F1BCD7 /* NSDate+Bcbp.h */; };
 		FDC652382129304E00F1BCD7 /* NSDate+Bcbp.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC652362129304E00F1BCD7 /* NSDate+Bcbp.m */; };
 		FDC6523A2129395500F1BCD7 /* NSDate_BcbpTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC652392129395500F1BCD7 /* NSDate_BcbpTests.m */; };
-		FDF21BD4236A048500415159 /* IBBcbp.h in Headers */ = {isa = PBXBuildFile; fileRef = FDF21BD2236A048500415159 /* IBBcbp.h */; };
+		FDF21BD4236A048500415159 /* IBBcbp.h in Headers */ = {isa = PBXBuildFile; fileRef = FDF21BD2236A048500415159 /* IBBcbp.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		FDF21BD5236A048500415159 /* IBBcbp.m in Sources */ = {isa = PBXBuildFile; fileRef = FDF21BD3236A048500415159 /* IBBcbp.m */; };
 		FDF21BD8236B5A3400415159 /* IBBoardingPassSecurityData.h in Headers */ = {isa = PBXBuildFile; fileRef = FDF21BD6236B5A3400415159 /* IBBoardingPassSecurityData.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FDF21BD9236B5A3400415159 /* IBBoardingPassSecurityData.m in Sources */ = {isa = PBXBuildFile; fileRef = FDF21BD7236B5A3400415159 /* IBBoardingPassSecurityData.m */; };
