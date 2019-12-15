@@ -11,12 +11,17 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface IBBoardingPassSecurityData ()
+@interface IBBoardingPassLeg ()
 
 /**
  Creates a new instance of the receiver with the specified Bcbp instance.
  */
-+ (instancetype)securityDataWithBcbp:(IBBcbp *)bcbp;
++ (instancetype)legWithBcbp:(IBBcbp *)bcbp scannedAt:(NSDate *)date;
+
+/**
+ @return A new instance of the receiver with all fields populated.
+ */
+- (instancetype)initWithScannedAt:(NSDate *)date NS_DESIGNATED_INITIALIZER;
 
 @end
 

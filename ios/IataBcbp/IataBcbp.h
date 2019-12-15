@@ -14,4 +14,5 @@ FOUNDATION_EXPORT double IataBcbpVersionNumber;
 FOUNDATION_EXPORT const unsigned char IataBcbpVersionString[];
 
 #import <IataBcbp/IBBoardingPass.h>
+#import <IataBcbp/IBBoardingPassLeg.h>
 #import <IataBcbp/IBBoardingPassSecurityData.h>

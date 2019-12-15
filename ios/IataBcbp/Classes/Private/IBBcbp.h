@@ -50,7 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  @return YES if the receiver is logically equal to `other``.
  */
-- (BOOL)isEqualToBcbp:(IBBcbp * _Nullable)other;
+- (BOOL)isEqualToBcbp:(IBBcbp *)other;
 
 /**
  Copies a field from the receiver associated with the top-level data section of the boarding pass.

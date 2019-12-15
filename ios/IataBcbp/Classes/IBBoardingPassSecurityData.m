@@ -9,7 +9,6 @@
 #import "IBBoardingPassSecurityData_Private.h"
 
 #import "IBBcbp.h"
-#import "NSString+Bcbp.h"
 
 @implementation IBBoardingPassSecurityData
 
@@ -59,8 +58,13 @@
 
 - (instancetype)initWithCoder:(NSCoder *)coder;
 {
-    return [self initWithTypeOfSecurityData:[coder decodeObjectOfClass:[NSString class] forKey:@"typeOfSecurityData"]
-                               securityData:[coder decodeObjectOfClass:[NSString class] forKey:@"securityData"]];
+    NSString * const typeOfSecurityData =
+        [coder decodeObjectOfClass:[NSString class] forKey:@"typeOfSecurityData"];
+    NSString * const securityData =
+        [coder decodeObjectOfClass:[NSString class] forKey:@"securityData"];
+
+    return [self initWithTypeOfSecurityData:typeOfSecurityData
+                               securityData:securityData];
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder;

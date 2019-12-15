@@ -11,6 +11,9 @@
 		FD051F712125FA0400D2B73A /* IBBoardingPass.m in Sources */ = {isa = PBXBuildFile; fileRef = FD051F6F2125FA0400D2B73A /* IBBoardingPass.m */; };
 		FD051F762126024200D2B73A /* NSString+Bcbp.h in Headers */ = {isa = PBXBuildFile; fileRef = FD051F742126024200D2B73A /* NSString+Bcbp.h */; };
 		FD051F772126024200D2B73A /* NSString+Bcbp.m in Sources */ = {isa = PBXBuildFile; fileRef = FD051F752126024200D2B73A /* NSString+Bcbp.m */; };
+		FD2C975923A5E50B002370F2 /* IBBoardingPassLeg.h in Headers */ = {isa = PBXBuildFile; fileRef = FD2C975723A5E50A002370F2 /* IBBoardingPassLeg.h */; };
+		FD2C975A23A5E50B002370F2 /* IBBoardingPassLeg.m in Sources */ = {isa = PBXBuildFile; fileRef = FD2C975823A5E50B002370F2 /* IBBoardingPassLeg.m */; };
+		FD2C975C23A5E524002370F2 /* IBBoardingPassLeg_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = FD2C975B23A5E524002370F2 /* IBBoardingPassLeg_Private.h */; };
 		FD4788552125F560000B8A5D /* IataBcbp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD47884B2125F560000B8A5D /* IataBcbp.framework */; };
 		FD47885A2125F560000B8A5D /* IBBoardingPassTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FD4788592125F560000B8A5D /* IBBoardingPassTests.m */; };
 		FD47885C2125F560000B8A5D /* IataBcbp.h in Headers */ = {isa = PBXBuildFile; fileRef = FD47884E2125F560000B8A5D /* IataBcbp.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -39,6 +42,9 @@
 		FD051F6F2125FA0400D2B73A /* IBBoardingPass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBBoardingPass.m; sourceTree = "<group>"; };
 		FD051F742126024200D2B73A /* NSString+Bcbp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Bcbp.h"; sourceTree = "<group>"; };
 		FD051F752126024200D2B73A /* NSString+Bcbp.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Bcbp.m"; sourceTree = "<group>"; };
+		FD2C975723A5E50A002370F2 /* IBBoardingPassLeg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBBoardingPassLeg.h; sourceTree = "<group>"; };
+		FD2C975823A5E50B002370F2 /* IBBoardingPassLeg.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBBoardingPassLeg.m; sourceTree = "<group>"; };
+		FD2C975B23A5E524002370F2 /* IBBoardingPassLeg_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBBoardingPassLeg_Private.h; sourceTree = "<group>"; };
 		FD47884B2125F560000B8A5D /* IataBcbp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = IataBcbp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD47884E2125F560000B8A5D /* IataBcbp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IataBcbp.h; sourceTree = "<group>"; };
 		FD47884F2125F560000B8A5D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -91,6 +97,9 @@
 				FDF21BCD236A042300415159 /* Private */,
 				FD051F6E2125FA0400D2B73A /* IBBoardingPass.h */,
 				FD051F6F2125FA0400D2B73A /* IBBoardingPass.m */,
+				FD2C975723A5E50A002370F2 /* IBBoardingPassLeg.h */,
+				FD2C975B23A5E524002370F2 /* IBBoardingPassLeg_Private.h */,
+				FD2C975823A5E50B002370F2 /* IBBoardingPassLeg.m */,
 				FDF21BD6236B5A3400415159 /* IBBoardingPassSecurityData.h */,
 				FDF21BDA236B5ADA00415159 /* IBBoardingPassSecurityData_Private.h */,
 				FDF21BD7236B5A3400415159 /* IBBoardingPassSecurityData.m */,
@@ -154,12 +163,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				FDF21BD4236A048500415159 /* IBBcbp.h in Headers */,
+				FD2C975923A5E50B002370F2 /* IBBoardingPassLeg.h in Headers */,
 				FDC652372129304E00F1BCD7 /* NSDate+Bcbp.h in Headers */,
 				FDF21BD8236B5A3400415159 /* IBBoardingPassSecurityData.h in Headers */,
 				FD051F702125FA0400D2B73A /* IBBoardingPass.h in Headers */,
 				FD051F762126024200D2B73A /* NSString+Bcbp.h in Headers */,
 				FD47885C2125F560000B8A5D /* IataBcbp.h in Headers */,
 				FDF21BDB236B5ADA00415159 /* IBBoardingPassSecurityData_Private.h in Headers */,
+				FD2C975C23A5E524002370F2 /* IBBoardingPassLeg_Private.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,6 +236,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = FD4788412125F560000B8A5D;
 			productRefGroup = FD47884C2125F560000B8A5D /* Products */;
@@ -261,6 +273,7 @@
 			files = (
 				FDF21BD9236B5A3400415159 /* IBBoardingPassSecurityData.m in Sources */,
 				FD051F772126024200D2B73A /* NSString+Bcbp.m in Sources */,
+				FD2C975A23A5E50B002370F2 /* IBBoardingPassLeg.m in Sources */,
 				FDF21BD5236A048500415159 /* IBBcbp.m in Sources */,
 				FD051F712125FA0400D2B73A /* IBBoardingPass.m in Sources */,
 				FDC652382129304E00F1BCD7 /* NSDate+Bcbp.m in Sources */,
