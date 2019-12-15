@@ -8,6 +8,8 @@
 #import "IBBoardingPass.h"
 
 #import "IBBcbp.h"
+#import "IBBoardingPassLeg.h"
+#import "IBBoardingPassLeg_Private.h"
 #import "IBBoardingPassSecurityData.h"
 #import "IBBoardingPassSecurityData_Private.h"
 #import "NSDate+Bcbp.h"
@@ -105,6 +107,12 @@
     // Nested flight leg data.
     NSMutableArray<IBBoardingPassLeg *> * const legs = [NSMutableArray arrayWithCapacity:bcbp.numberOfLegs];
 
+    for (NSInteger i = 0; i < bcbp.numberOfLegs; ++i) {
+        [legs addObject:[IBBoardingPassLeg legWithBcbp:bcbp
+                                              legIndex:i
+                                             scannedAt:date]];
+    }
+
     // Optional, nested security data structure.
     IBBoardingPassSecurityData * const securityData = [IBBoardingPassSecurityData securityDataWithBcbp:bcbp];
 
@@ -150,10 +158,12 @@
     NSParameterAssert(passengerName.length > 0);
     NSParameterAssert(securityData != nil);
     NSParameterAssert(allBaggageTagLicensePlateRanges != nil);
+    NSParameterAssert(legs != nil);
     NSParameterAssert(date != nil);
     if (passengerName.length == 0 ||
         securityData == nil ||
         allBaggageTagLicensePlateRanges == nil ||
+        legs == nil ||
         date == nil) {
         return nil;
     }

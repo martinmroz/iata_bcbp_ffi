@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Creates a new instance of the receiver with the specified Bcbp instance.
  */
-+ (instancetype)legWithBcbp:(IBBcbp *)bcbp scannedAt:(NSDate *)date;
++ (instancetype)legWithBcbp:(IBBcbp *)bcbp legIndex:(NSInteger)legIndex scannedAt:(NSDate *)date;
 
 /**
  @return A new instance of the receiver with all fields populated.

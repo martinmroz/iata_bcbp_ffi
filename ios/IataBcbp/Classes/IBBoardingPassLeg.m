@@ -15,11 +15,15 @@
 
 // MARK: - Class Methods
 
-+ (instancetype)legWithBcbp:(IBBcbp *)bcbp scannedAt:(NSDate *)date;
++ (instancetype)legWithBcbp:(IBBcbp *)bcbp legIndex:(NSInteger)legIndex scannedAt:(NSDate *)date;
 {
     NSParameterAssert(bcbp != NULL);
+    NSParameterAssert(legIndex >= 0 && legIndex < bcbp.numberOfLegs);
     NSParameterAssert(date != nil);
-    if (bcbp == NULL || date == nil) {
+    if (bcbp == NULL ||
+        legIndex < 0 ||
+        legIndex >= bcbp.numberOfLegs ||
+        date == nil) {
         return nil;
     }
 

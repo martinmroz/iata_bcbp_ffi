@@ -39,8 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (_Nullable instancetype)init NS_UNAVAILABLE;
 
 /**
- @return YES if the receiver is logically equal to boardingPass, in both contents and reference date.
- @see -[IBBoardingPass scannedAt]
+ @return YES if the receiver is logically equal to boardingPass in contents but not reference date.
  */
 - (BOOL)isEqualToBoardingPass:(IBBoardingPass *)boardingPass;
 
