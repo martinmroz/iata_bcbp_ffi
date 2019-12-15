@@ -167,7 +167,7 @@
     _sourceOfBoardingPassIssuance = [sourceOfBoardingPassIssuance copy];
     _documentType = [documentType copy];
     _airlineDesignatorOfBoardingPassIssuer = [airlineDesignatorOfBoardingPassIssuer copy];
-    allBaggageTagLicensePlateRanges = [allBaggageTagLicensePlateRanges copy];
+    _allBaggageTagLicensePlateRanges = [allBaggageTagLicensePlateRanges copy];
     _securityData = securityData;
     _scannedAt = date;
 
