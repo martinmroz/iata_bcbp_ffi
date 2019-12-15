@@ -108,9 +108,12 @@
     NSMutableArray<IBBoardingPassLeg *> * const legs = [NSMutableArray arrayWithCapacity:bcbp.numberOfLegs];
 
     for (NSInteger i = 0; i < bcbp.numberOfLegs; ++i) {
-        [legs addObject:[IBBoardingPassLeg legWithBcbp:bcbp
-                                              legIndex:i
-                                             scannedAt:date]];
+        IBBoardingPassLeg * const leg = [IBBoardingPassLeg legWithBcbp:bcbp legIndex:i scannedAt:date];
+        if (leg == nil) {
+            return nil;
+        } else {
+            [legs addObject:leg];
+        }
     }
 
     // Optional, nested security data structure.
