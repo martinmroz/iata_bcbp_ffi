@@ -7,6 +7,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface NSString (Bcbp)
 
 /**
@@ -16,7 +18,7 @@
  FFI method once no longer required.
  @return A new instance of the receiver taking ownership of the input, or nil if the input is nil.
  */
-+ (_Nullable instancetype)IB_stringWithBcbpManagedCStringNoCopy:(char *const _Nullable)bcbpCString;
++ (_Nullable instancetype)IB_stringWithBcbpManagedCStringNoCopy:(char * _Nullable)bcbpCString;
 
 /**
  Creates an NSString wrapping the `Bcbp` owned and managed C string.
@@ -26,7 +28,7 @@
  @param length The pre-determined length of the `bcbpCString` in bytes.
  @return A new instance of the receiver taking ownership of the input, or nil if the input is nil.
  */
-+ (_Nullable instancetype)IB_stringWithBcbpManagedCStringNoCopy:(char *const _Nullable)bcbpCString length:(NSUInteger)length;
++ (_Nullable instancetype)IB_stringWithBcbpManagedCStringNoCopy:(char * _Nullable)bcbpCString length:(NSUInteger)length;
 
 /**
  @return true if the receiver is comprised solely of ASCII spaces.
@@ -39,3 +41,5 @@
 @property (nonatomic, assign, readonly, getter=isEntirelyDecimalDigits) BOOL entirelyDecimalDigits;
 
 @end
+
+NS_ASSUME_NONNULL_END

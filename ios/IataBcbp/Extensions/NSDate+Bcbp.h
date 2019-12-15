@@ -7,6 +7,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface NSDate (Bcbp)
 
 /**
@@ -18,7 +20,7 @@
  @param date The on-or-before date used when calculating the Gregorian date.
  @return nil if a date could not be constructed.
  */
-+ (_Nullable instancetype)IB_dateWithFourDigitJulianString:(NSString * _Nonnull)string onOrBefore:(NSDate * _Nonnull)date;
++ (_Nullable instancetype)IB_dateWithFourDigitJulianString:(NSString *)string onOrBefore:(NSDate *)date;
 
 /**
  Constructs an instance of the receiver from a three-digit Julian string.
@@ -28,6 +30,8 @@
  @param date The on-or-before date used when calculating the Gregorian date.
  @return nil if a date could not be constructed.
  */
-+ (_Nullable instancetype)IB_dateWithThreeDigitJulianString:(NSString * _Nonnull)string onOrBefore:(NSDate * _Nonnull)date;
++ (_Nullable instancetype)IB_dateWithThreeDigitJulianString:(NSString *)string onOrBefore:(NSDate *)date;
 
 @end
+
+NS_ASSUME_NONNULL_END

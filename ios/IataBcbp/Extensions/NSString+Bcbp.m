@@ -35,12 +35,12 @@ static CFAllocatorContext BcbpCStringDeallocatorContext = {
 
 @implementation NSString (Bcbp)
 
-+ (_Nullable instancetype)IB_stringWithBcbpManagedCStringNoCopy:(char *const _Nullable)bcbpCString;
++ (instancetype)IB_stringWithBcbpManagedCStringNoCopy:(char *)bcbpCString;
 {
     return [self IB_stringWithBcbpManagedCStringNoCopy:bcbpCString length:strlen(bcbpCString)];
 }
 
-+ (_Nullable instancetype)IB_stringWithBcbpManagedCStringNoCopy:(char *const _Nullable)bcbpCString length:(NSUInteger)length;
++ (instancetype)IB_stringWithBcbpManagedCStringNoCopy:(char *)bcbpCString length:(NSUInteger)length;
 {
     if (bcbpCString == NULL) {
         return nil;
