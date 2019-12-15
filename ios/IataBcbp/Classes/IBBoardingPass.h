@@ -7,6 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
+@class IBBoardingPassLeg;
 @class IBBoardingPassSecurityData;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -143,6 +144,11 @@ NS_ASSUME_NONNULL_BEGIN
  A string composed entirely of space literals indicates the field existed in the boarding pass but was not set.
  */
 @property (nonatomic, copy, readonly) NSArray<NSString *> *allBaggageTagLicensePlateRanges;
+
+/**
+ Flight legs encoded in the boarding pass.
+ */
+@property (nonatomic, copy, readonly) NSArray<IBBoardingPassLeg *> *legs;
 
 /**
  Security data section of the boarding pass.

@@ -16,7 +16,7 @@
 
 // MARK: - Class Methods
 
-+ (_Nullable instancetype)boardingPassWithBcbpString:(NSString * _Nonnull)passString;
++ (_Nullable instancetype)boardingPassWithBcbpString:(NSString *)passString;
 {
     NSParameterAssert(passString != nil);
     if (passString.length == 0) {
@@ -26,7 +26,7 @@
     return [self boardingPassWithBcbpString:passString scannedAt:[NSDate date]];
 }
 
-+ (_Nullable instancetype)boardingPassWithBcbpString:(NSString * _Nonnull)passString scannedAt:(NSDate * _Nonnull)date;
++ (_Nullable instancetype)boardingPassWithBcbpString:(NSString *)passString scannedAt:(NSDate *)date;
 {
     NSParameterAssert(passString != nil);
     NSParameterAssert(date != nil);
@@ -42,7 +42,7 @@
     return [self boardingPassWithBcbp:bcbp scannedAt:date];
 }
 
-+ (_Nullable instancetype)boardingPassWithBcbp:(IBBcbp * _Nonnull)bcbp scannedAt:(NSDate * _Nonnull)date;
++ (_Nullable instancetype)boardingPassWithBcbp:(IBBcbp *)bcbp scannedAt:(NSDate *)date;
 {
     NSParameterAssert(bcbp != NULL);
     NSParameterAssert(date != nil);
@@ -102,6 +102,9 @@
         [allBaggageTagLicensePlateRanges addObject:secondNonConsecutiveBaggageTagLicensePlateNumbers];
     }
 
+    // Nested flight leg data.
+    NSMutableArray<IBBoardingPassLeg *> * const legs = [NSMutableArray arrayWithCapacity:bcbp.numberOfLegs];
+
     // Optional, nested security data structure.
     IBBoardingPassSecurityData * const securityData = [IBBoardingPassSecurityData securityDataWithBcbp:bcbp];
 
@@ -115,6 +118,7 @@
                                             documentType:documentType
                    airlineDesignatorOfBoardingPassIssuer:airlineDesignatorOfBoardingPassIssuer
                          allBaggageTagLicensePlateRanges:allBaggageTagLicensePlateRanges
+                                                    legs:legs
                                             securityData:securityData
                                                scannedAt:date];
 }
@@ -139,6 +143,7 @@
                                    documentType:(NSString * _Nullable)documentType
           airlineDesignatorOfBoardingPassIssuer:(NSString * _Nullable)airlineDesignatorOfBoardingPassIssuer
                 allBaggageTagLicensePlateRanges:(NSArray<NSString *> *)allBaggageTagLicensePlateRanges
+                                           legs:(NSArray<IBBoardingPassLeg *> *)legs
                                    securityData:(IBBoardingPassSecurityData *)securityData
                                       scannedAt:(NSDate *)date;
 {
@@ -168,6 +173,7 @@
     _documentType = [documentType copy];
     _airlineDesignatorOfBoardingPassIssuer = [airlineDesignatorOfBoardingPassIssuer copy];
     _allBaggageTagLicensePlateRanges = [allBaggageTagLicensePlateRanges copy];
+    _legs = [legs copy];
     _securityData = securityData;
     _scannedAt = date;
 
@@ -198,6 +204,8 @@
         [coder decodeObjectOfClass:[NSString class] forKey:@"airlineDesignatorOfBoardingPassIssuer"];
     NSArray<NSString *> * const allBaggageTagLicensePlateRanges =
         [coder decodeObjectOfClass:[NSArray class] forKey:@"allBaggageTagLicensePlateRanges"];
+    NSArray<IBBoardingPassLeg *> * const legs =
+        [coder decodeObjectOfClass:[NSArray class] forKey:@"legs"];
     IBBoardingPassSecurityData * const securityData =
         [coder decodeObjectOfClass:[IBBoardingPassSecurityData class] forKey:@"securityData"];
     NSDate * const scannedAt =
@@ -213,6 +221,7 @@
                           documentType:documentType
  airlineDesignatorOfBoardingPassIssuer:airlineDesignatorOfBoardingPassIssuer
        allBaggageTagLicensePlateRanges:allBaggageTagLicensePlateRanges
+                                  legs:legs
                           securityData:securityData
                              scannedAt:scannedAt];
 }
@@ -239,6 +248,8 @@
                  forKey:@"airlineDesignatorOfBoardingPassIssuer"];
     [coder encodeObject:self.allBaggageTagLicensePlateRanges
                  forKey:@"allBaggageTagLicensePlateRanges"];
+    [coder encodeObject:self.legs
+                 forKey:@"legs"];
     [coder encodeObject:self.securityData
                  forKey:@"securityData"];
     [coder encodeObject:self.scannedAt
@@ -266,15 +277,16 @@
             self.documentType.hash ^
             self.airlineDesignatorOfBoardingPassIssuer.hash ^
             self.allBaggageTagLicensePlateRanges.hash ^
+            self.legs.hash ^
             self.securityData.hash);
 }
 
 - (NSString *)debugDescription;
 {
-    return [NSString stringWithFormat:@"<%@:%p with %d legs>",
+    return [NSString stringWithFormat:@"<%@:%p with %@ legs>",
         NSStringFromClass(self.class),
         (void *)self,
-        0
+        @(self.legs.count)
     ];
 }
 
@@ -329,6 +341,9 @@
     BOOL const hasEqualAllBaggageTagLicensePlateRanges =
         (self.allBaggageTagLicensePlateRanges == boardingPass.allBaggageTagLicensePlateRanges) ||
         [self.allBaggageTagLicensePlateRanges isEqual:boardingPass.allBaggageTagLicensePlateRanges];
+    BOOL const hasEqualLegs =
+        (self.legs == boardingPass.legs) ||
+        [self.legs isEqual:boardingPass.legs];
     BOOL const hasEqualSecurityData =
         (self.securityData == boardingPass.securityData) ||
         [self.securityData isEqual:boardingPass.securityData];
@@ -343,6 +358,7 @@
             hasEqualDocumentType &&
             hasEqualAirlineDesignatorOfBoardingPassIssuer &&
             hasEqualAllBaggageTagLicensePlateRanges &&
+            hasEqualLegs &&
             hasEqualSecurityData);
 }
 
