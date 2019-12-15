@@ -105,12 +105,12 @@
 
 #pragma mark - Public Methods
 
-- (BOOL)isEqualToBcbp:(IBBcbp *_Nullable)other;
+- (BOOL)isEqualToBcbp:(IBBcbp * _Nullable)other;
 {
     return BcbpIsEqual(self.bcbp, other.bcbp);
 }
 
-- (NSString *_Nullable)fieldWithId:(BcbpFieldId)fieldId;
+- (NSString * _Nullable)fieldWithId:(BcbpFieldId)fieldId;
 {
     // Copy the field from the boarding pass.
     char * fieldCString = NULL;
@@ -123,7 +123,7 @@
     }
 }
 
-- (NSString *_Nullable)securityFieldWithId:(BcbpSecurityFieldId)fieldId;
+- (NSString * _Nullable)securityFieldWithId:(BcbpSecurityFieldId)fieldId;
 {
     // Copy the security field from the boarding pass.
     char * fieldCString = NULL;
@@ -136,7 +136,7 @@
     }
 }
 
-- (NSString *_Nullable)flightLeg:(NSInteger)index fieldWithId:(BcbpFlightLegFieldId)fieldId;
+- (NSString * _Nullable)flightLeg:(NSInteger)index fieldWithId:(BcbpFlightLegFieldId)fieldId;
 {
     if (index >= self.numberOfLegs) {
         return nil;

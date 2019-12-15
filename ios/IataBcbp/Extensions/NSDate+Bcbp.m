@@ -11,7 +11,7 @@
 
 @implementation NSDate (Bcbp)
 
-+ (_Nullable instancetype)IB_dateWithFourDigitJulianString:(NSString *_Nonnull)string onOrBefore:(NSDate *_Nonnull)date;
++ (instancetype)IB_dateWithFourDigitJulianString:(NSString *)string onOrBefore:(NSDate *)date;
 {
     NSParameterAssert(string != nil);
     NSParameterAssert(date != nil);
@@ -53,7 +53,7 @@
     return [gregorianCalendar dateFromComponents:components];
 }
 
-+ (_Nullable instancetype)IB_dateWithThreeDigitJulianString:(NSString *_Nonnull)string onOrBefore:(NSDate *_Nonnull)date;
++ (instancetype)IB_dateWithThreeDigitJulianString:(NSString *)string onOrBefore:(NSDate *)date;
 {
     NSParameterAssert(string != nil);
     NSParameterAssert(date != nil);

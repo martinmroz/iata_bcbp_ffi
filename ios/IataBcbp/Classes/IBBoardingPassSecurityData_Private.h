@@ -21,8 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  @return A new instance of the receiver with all fields populated.
  */
-- (instancetype)initWithTypeOfSecurityData:(NSString *_Nullable)typeOfSecurityData
-                              securityData:(NSString *_Nullable)securityData NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithTypeOfSecurityData:(NSString * _Nullable)typeOfSecurityData
+                              securityData:(NSString * _Nullable)securityData NS_DESIGNATED_INITIALIZER;
 
 @end
 

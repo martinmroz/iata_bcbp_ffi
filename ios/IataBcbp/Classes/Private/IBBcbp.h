@@ -50,21 +50,21 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  @return YES if the receiver is logically equal to `other``.
  */
-- (BOOL)isEqualToBcbp:(IBBcbp *_Nullable)other;
+- (BOOL)isEqualToBcbp:(IBBcbp * _Nullable)other;
 
 /**
  Copies a field from the receiver associated with the top-level data section of the boarding pass.
  @param fieldId The top-level field to extract.
  @return A string representation of the field or `nil` if not available.
  */
-- (NSString *_Nullable)fieldWithId:(BcbpFieldId)fieldId;
+- (NSString * _Nullable)fieldWithId:(BcbpFieldId)fieldId;
 
 /**
  Copies a field from the receiver associated with the security data section of the boarding pass.
  @param fieldId The security data field to extract.
  @return A string representation of the field or `nil` if not available.
  */
-- (NSString *_Nullable)securityFieldWithId:(BcbpSecurityFieldId)fieldId;
+- (NSString * _Nullable)securityFieldWithId:(BcbpSecurityFieldId)fieldId;
 
 /**
  Copies a field from the receiver associated with a specific leg of the boarding pass.
@@ -73,7 +73,7 @@ NS_ASSUME_NONNULL_BEGIN
  @return A string representation of the field or `nil` if not available.
  @see -[IBBcbp numberOfLegs]
  */
-- (NSString *_Nullable)flightLeg:(NSInteger)index fieldWithId:(BcbpFlightLegFieldId)fieldId;
+- (NSString * _Nullable)flightLeg:(NSInteger)index fieldWithId:(BcbpFlightLegFieldId)fieldId;
 
 @end
 

@@ -110,7 +110,7 @@
 
 // MARK: - Helper Methods
 
-+ (NSDate *_Nonnull)dateWithYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day;
++ (NSDate * _Nonnull)dateWithYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day;
 {
     NSCalendar *const gregorian = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
     NSDateComponents *const components = [NSDateComponents new];
