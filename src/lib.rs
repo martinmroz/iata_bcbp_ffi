@@ -288,9 +288,9 @@ pub unsafe extern "C" fn BcbpCopyField(
 pub enum BcbpSecurityFieldId {
     /// Always `null`.
     Unknown = 0,
-    /// The name of the passenger, optional, 1 byte.
+    /// Type of security data, optional, 1 byte.
     TypeOfSecurityData,
-    /// Electronic ticket indicator, optional, arbitrary length up to 255 bytes.
+    /// Security data, optional, variable-length up to 255 bytes.
     SecurityData,
 }
 
