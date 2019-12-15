@@ -178,18 +178,43 @@
 
 - (instancetype)initWithCoder:(NSCoder *)coder;
 {
-    return [self initWithPassengerName:[coder decodeObjectOfClass:[NSString class] forKey:@"passengerName"]
-             electronicTicketIndicator:[coder decodeInt64ForKey:@"electronicTicketIndicator"]
-             dateOfIssueOfBoardingPass:[coder decodeObjectOfClass:[NSDate class] forKey:@"dateOfIssueOfBoardingPass"]
-                         versionNumber:[coder decodeObjectOfClass:[NSString class] forKey:@"versionNumber"]
-                  passengerDescription:[coder decodeObjectOfClass:[NSString class] forKey:@"passengerDescription"]
-                       sourceOfCheckIn:[coder decodeObjectOfClass:[NSString class] forKey:@"sourceOfCheckIn"]
-          sourceOfBoardingPassIssuance:[coder decodeObjectOfClass:[NSString class] forKey:@"sourceOfBoardingPassIssuance"]
-                          documentType:[coder decodeObjectOfClass:[NSString class] forKey:@"documentType"]
- airlineDesignatorOfBoardingPassIssuer:[coder decodeObjectOfClass:[NSString class] forKey:@"airlineDesignatorOfBoardingPassIssuer"]
-       allBaggageTagLicensePlateRanges:[coder decodeObjectOfClass:[NSArray class] forKey:@"allBaggageTagLicensePlateRanges"]
-                          securityData:[coder decodeObjectOfClass:[IBBoardingPassSecurityData class] forKey:@"securityData"]
-                             scannedAt:[coder decodeObjectOfClass:[NSDate class] forKey:@"scannedAt"]];
+    NSString * const passengerName =
+        [coder decodeObjectOfClass:[NSString class] forKey:@"passengerName"];
+    unichar const electronicTicketIndicator =
+        (unichar)[coder decodeInt64ForKey:@"electronicTicketIndicator"];
+    NSDate * const dateOfIssueOfBoardingPass =
+        [coder decodeObjectOfClass:[NSDate class] forKey:@"dateOfIssueOfBoardingPass"];
+    NSString * const versionNumber =
+        [coder decodeObjectOfClass:[NSString class] forKey:@"versionNumber"];
+    NSString * const passengerDescription =
+        [coder decodeObjectOfClass:[NSString class] forKey:@"passengerDescription"];
+    NSString * const sourceOfCheckIn =
+        [coder decodeObjectOfClass:[NSString class] forKey:@"sourceOfCheckIn"];
+    NSString * const sourceOfBoardingPassIssuance =
+        [coder decodeObjectOfClass:[NSString class] forKey:@"sourceOfBoardingPassIssuance"];
+    NSString * const documentType =
+        [coder decodeObjectOfClass:[NSString class] forKey:@"documentType"];
+    NSString * const airlineDesignatorOfBoardingPassIssuer =
+        [coder decodeObjectOfClass:[NSString class] forKey:@"airlineDesignatorOfBoardingPassIssuer"];
+    NSArray<NSString *> * const allBaggageTagLicensePlateRanges =
+        [coder decodeObjectOfClass:[NSArray class] forKey:@"allBaggageTagLicensePlateRanges"];
+    IBBoardingPassSecurityData * const securityData =
+        [coder decodeObjectOfClass:[IBBoardingPassSecurityData class] forKey:@"securityData"];
+    NSDate * const scannedAt =
+        [coder decodeObjectOfClass:[NSDate class] forKey:@"scannedAt"];
+
+    return [self initWithPassengerName:passengerName
+             electronicTicketIndicator:electronicTicketIndicator
+             dateOfIssueOfBoardingPass:dateOfIssueOfBoardingPass
+                         versionNumber:versionNumber
+                  passengerDescription:passengerDescription
+                       sourceOfCheckIn:sourceOfCheckIn
+          sourceOfBoardingPassIssuance:sourceOfBoardingPassIssuance
+                          documentType:documentType
+ airlineDesignatorOfBoardingPassIssuer:airlineDesignatorOfBoardingPassIssuer
+       allBaggageTagLicensePlateRanges:allBaggageTagLicensePlateRanges
+                          securityData:securityData
+                             scannedAt:scannedAt];
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder;
