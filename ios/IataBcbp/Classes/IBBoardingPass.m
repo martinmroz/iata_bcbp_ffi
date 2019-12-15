@@ -89,16 +89,17 @@
     NSString * const secondNonConsecutiveBaggageTagLicensePlateNumbers =
         [bcbp fieldWithId:BCBP_FIELD_ID_SECOND_NON_CONSECUTIVE_BAGGAGE_TAG_LICENSE_PLATE_NUMBERS];
 
-    // Create an array of the baggage tag license plate nubmers.
-    NSMutableArray<NSString *> * const allBaggageTagLicensePlateNumbers = [NSMutableArray new];
+    // Create an array of the baggage tag license plate number ranges.
+    NSMutableArray<NSString *> * const allBaggageTagLicensePlateRanges = [NSMutableArray new];
+
     if (baggageTagLicensePlateNumbers.length > 0) {
-        [allBaggageTagLicensePlateNumbers addObject:baggageTagLicensePlateNumbers];
+        [allBaggageTagLicensePlateRanges addObject:baggageTagLicensePlateNumbers];
     }
     if (firstNonConsecutiveBaggageTagLicensePlateNumbers.length > 0) {
-        [allBaggageTagLicensePlateNumbers addObject:firstNonConsecutiveBaggageTagLicensePlateNumbers];
+        [allBaggageTagLicensePlateRanges addObject:firstNonConsecutiveBaggageTagLicensePlateNumbers];
     }
     if (secondNonConsecutiveBaggageTagLicensePlateNumbers.length > 0) {
-        [allBaggageTagLicensePlateNumbers addObject:secondNonConsecutiveBaggageTagLicensePlateNumbers];
+        [allBaggageTagLicensePlateRanges addObject:secondNonConsecutiveBaggageTagLicensePlateNumbers];
     }
 
     // Optional, nested security data structure.
@@ -113,7 +114,7 @@
                             sourceOfBoardingPassIssuance:sourceOfBoardingPassIssuance
                                             documentType:documentType
                    airlineDesignatorOfBoardingPassIssuer:airlineDesignatorOfBoardingPassIssuer
-                        allBaggageTagLicensePlateNumbers:allBaggageTagLicensePlateNumbers
+                         allBaggageTagLicensePlateRanges:allBaggageTagLicensePlateRanges
                                             securityData:securityData
                                                scannedAt:date];
 }
@@ -137,17 +138,17 @@
                    sourceOfBoardingPassIssuance:(NSString * _Nullable)sourceOfBoardingPassIssuance
                                    documentType:(NSString * _Nullable)documentType
           airlineDesignatorOfBoardingPassIssuer:(NSString * _Nullable)airlineDesignatorOfBoardingPassIssuer
-               allBaggageTagLicensePlateNumbers:(NSArray<NSString *> *)allBaggageTagLicensePlateNumbers
+                allBaggageTagLicensePlateRanges:(NSArray<NSString *> *)allBaggageTagLicensePlateRanges
                                    securityData:(IBBoardingPassSecurityData *)securityData
                                       scannedAt:(NSDate *)date;
 {
     NSParameterAssert(passengerName.length > 0);
     NSParameterAssert(securityData != nil);
-    NSParameterAssert(allBaggageTagLicensePlateNumbers != nil);
+    NSParameterAssert(allBaggageTagLicensePlateRanges != nil);
     NSParameterAssert(date != nil);
     if (passengerName.length == 0 ||
         securityData == nil ||
-        allBaggageTagLicensePlateNumbers == nil ||
+        allBaggageTagLicensePlateRanges == nil ||
         date == nil) {
         return nil;
     }
@@ -166,7 +167,7 @@
     _sourceOfBoardingPassIssuance = [sourceOfBoardingPassIssuance copy];
     _documentType = [documentType copy];
     _airlineDesignatorOfBoardingPassIssuer = [airlineDesignatorOfBoardingPassIssuer copy];
-    _allBaggageTagLicensePlateNumbers = [allBaggageTagLicensePlateNumbers copy];
+    allBaggageTagLicensePlateRanges = [allBaggageTagLicensePlateRanges copy];
     _securityData = securityData;
     _scannedAt = date;
 
@@ -186,7 +187,7 @@
           sourceOfBoardingPassIssuance:[coder decodeObjectOfClass:[NSString class] forKey:@"sourceOfBoardingPassIssuance"]
                           documentType:[coder decodeObjectOfClass:[NSString class] forKey:@"documentType"]
  airlineDesignatorOfBoardingPassIssuer:[coder decodeObjectOfClass:[NSString class] forKey:@"airlineDesignatorOfBoardingPassIssuer"]
-      allBaggageTagLicensePlateNumbers:[coder decodeObjectOfClass:[NSArray class] forKey:@"allBaggageTagLicensePlateNumbers"]
+       allBaggageTagLicensePlateRanges:[coder decodeObjectOfClass:[NSArray class] forKey:@"allBaggageTagLicensePlateRanges"]
                           securityData:[coder decodeObjectOfClass:[IBBoardingPassSecurityData class] forKey:@"securityData"]
                              scannedAt:[coder decodeObjectOfClass:[NSDate class] forKey:@"scannedAt"]];
 }
@@ -211,8 +212,8 @@
                  forKey:@"documentType"];
     [coder encodeObject:self.airlineDesignatorOfBoardingPassIssuer
                  forKey:@"airlineDesignatorOfBoardingPassIssuer"];
-    [coder encodeObject:self.allBaggageTagLicensePlateNumbers
-                 forKey:@"allBaggageTagLicensePlateNumbers"];
+    [coder encodeObject:self.allBaggageTagLicensePlateRanges
+                 forKey:@"allBaggageTagLicensePlateRanges"];
     [coder encodeObject:self.securityData
                  forKey:@"securityData"];
     [coder encodeObject:self.scannedAt
@@ -239,7 +240,7 @@
             self.sourceOfBoardingPassIssuance.hash ^
             self.documentType.hash ^
             self.airlineDesignatorOfBoardingPassIssuer.hash ^
-            self.allBaggageTagLicensePlateNumbers.hash ^
+            self.allBaggageTagLicensePlateRanges.hash ^
             self.securityData.hash);
 }
 
@@ -300,9 +301,9 @@
     BOOL const hasEqualAirlineDesignatorOfBoardingPassIssuer =
         (self.airlineDesignatorOfBoardingPassIssuer == boardingPass.airlineDesignatorOfBoardingPassIssuer) ||
         [self.airlineDesignatorOfBoardingPassIssuer isEqual:boardingPass.airlineDesignatorOfBoardingPassIssuer];
-    BOOL const hasEqualBaggageTagLicensePlateNumbers =
-        (self.allBaggageTagLicensePlateNumbers == boardingPass.allBaggageTagLicensePlateNumbers) ||
-        [self.allBaggageTagLicensePlateNumbers isEqual:boardingPass.allBaggageTagLicensePlateNumbers];
+    BOOL const hasEqualAllBaggageTagLicensePlateRanges =
+        (self.allBaggageTagLicensePlateRanges == boardingPass.allBaggageTagLicensePlateRanges) ||
+        [self.allBaggageTagLicensePlateRanges isEqual:boardingPass.allBaggageTagLicensePlateRanges];
     BOOL const hasEqualSecurityData =
         (self.securityData == boardingPass.securityData) ||
         [self.securityData isEqual:boardingPass.securityData];
@@ -316,7 +317,7 @@
             hasEqualSourceOfBoardingPassIssuance &&
             hasEqualDocumentType &&
             hasEqualAirlineDesignatorOfBoardingPassIssuer &&
-            hasEqualBaggageTagLicensePlateNumbers &&
+            hasEqualAllBaggageTagLicensePlateRanges &&
             hasEqualSecurityData);
 }
 

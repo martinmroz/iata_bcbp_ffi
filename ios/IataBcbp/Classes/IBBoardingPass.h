@@ -142,7 +142,7 @@ NS_ASSUME_NONNULL_BEGIN
  For each value, nil indicates the value was not specified in the boarding pass.
  A string composed entirely of space literals indicates the field existed in the boarding pass but was not set.
  */
-@property (nonatomic, copy, readonly) NSArray<NSString *> *allBaggageTagLicensePlateNumbers;
+@property (nonatomic, copy, readonly) NSArray<NSString *> *allBaggageTagLicensePlateRanges;
 
 /**
  Security data section of the boarding pass.
