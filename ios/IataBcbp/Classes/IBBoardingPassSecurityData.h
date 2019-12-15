@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface IBBoardingPassSecurityData : NSObject <NSCoding>
+@interface IBBoardingPassSecurityData : NSObject <NSCoding, NSCopying>
 
 /**
  @see IBBoardingPass

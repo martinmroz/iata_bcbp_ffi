@@ -31,7 +31,6 @@
     NSString *const passString = @"M1DESMARAIS/LUC       EABC123 YULFRAAC 0834 326J001A0025 100";
     IBBoardingPass *const pass = [IBBoardingPass boardingPassWithBcbpString:passString];
     XCTAssertNotNil(pass);
-    NSLog(@"%@", pass.passengerName);
 }
 
 @end

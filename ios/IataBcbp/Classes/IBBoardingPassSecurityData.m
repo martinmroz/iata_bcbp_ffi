@@ -71,17 +71,19 @@
                  forKey:@"securityData"];
 }
 
+// MARK: - NSCopying
+
+- (id)copyWithZone:(NSZone *)zone;
+{
+    return self;
+}
+
 // MARK: - NSObject
 
 - (NSUInteger)hash;
 {
     return (self.typeOfSecurityData.hash ^
             self.securityData.hash);
-}
-
-- (instancetype)copy;
-{
-    return self;
 }
 
 - (NSString *)debugDescription;

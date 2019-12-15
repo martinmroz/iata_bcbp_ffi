@@ -12,27 +12,19 @@
 #import "IBBoardingPassSecurityData_Private.h"
 #import "NSDate+Bcbp.h"
 
-@interface IBBoardingPass ()
-
-// MARK: - Private Properties
-
-/// The underlying boarding pass data object.
-@property (nonatomic, strong) IBBcbp *bcbp;
-
-/// The reference to use when interpreting Julian date strings.
-@property (nonatomic, strong, readwrite) NSDate *scannedAt;
-
-// MARK: - Public Property Redeclarations
-
-@property (nonatomic, copy, readwrite, nonnull) NSString *passengerName;
-@property (nonatomic, assign, readwrite, nonnull) NSString *electronicTicketIndicatorValue;
-@property (nonatomic, copy, readwrite, nullable) NSDate *dateOfIssueOfBoardingPass;
-
-@end
-
 @implementation IBBoardingPass
 
 // MARK: - Class Methods
+
++ (_Nullable instancetype)boardingPassWithBcbpString:(NSString *_Nonnull)passString;
+{
+    NSParameterAssert(passString != nil);
+    if (passString.length == 0) {
+        return nil;
+    }
+
+    return [self boardingPassWithBcbpString:passString scannedAt:[NSDate date]];
+}
 
 + (_Nullable instancetype)boardingPassWithBcbpString:(NSString *_Nonnull)passString scannedAt:(NSDate *_Nonnull)date;
 {
@@ -47,17 +39,45 @@
         return nil;
     }
 
-    return [[self alloc] initWithBcbp:bcbp scannedAt:date];
+    return [self boardingPassWithBcbp:bcbp scannedAt:date];
 }
 
-+ (_Nullable instancetype)boardingPassWithBcbpString:(NSString *_Nonnull)passString;
++ (_Nullable instancetype)boardingPassWithBcbp:(IBBcbp *_Nonnull)bcbp scannedAt:(NSDate *_Nonnull)date;
 {
-    NSParameterAssert(passString != nil);
-    if (passString.length == 0) {
+    NSParameterAssert(bcbp != NULL);
+    NSParameterAssert(date != nil);
+    if (bcbp == NULL || date == nil) {
         return nil;
     }
 
-    return [self boardingPassWithBcbpString:passString scannedAt:[NSDate date]];
+    // Mandatory top-level fields.
+    NSString * const passengerName =
+        [bcbp fieldWithId:BCBP_FIELD_ID_PASSENGER_NAME];
+    NSString * const electronicTicketIndicatorValue =
+        [bcbp fieldWithId:BCBP_FIELD_ID_ELECTRONIC_TICKET_INDICATOR];
+    if (passengerName.length == 0 || electronicTicketIndicatorValue.length != 1) {
+        return nil;
+    }
+
+    // Optional top-level fields.
+    NSDate * const dateOfIssueOfBoardingPass = ^ NSDate * _Nullable {
+        NSString * const julianRepresentation =
+            [bcbp fieldWithId:BCBP_FIELD_ID_DATE_OF_ISSUE_OF_BOARDING_PASS];
+        if (julianRepresentation.length > 0) {
+            return [NSDate IB_dateWithFourDigitJulianString:julianRepresentation onOrBefore:date];
+        } else {
+            return nil;
+        }
+    }();
+
+    // Optional, nested security data structure.
+    IBBoardingPassSecurityData * const securityData = [IBBoardingPassSecurityData securityDataWithBcbp:bcbp];
+
+    return [[IBBoardingPass alloc] initWithPassengerName:passengerName
+                               electronicTicketIndicator:[electronicTicketIndicatorValue characterAtIndex:0]
+                               dateOfIssueOfBoardingPass:dateOfIssueOfBoardingPass
+                                            securityData:securityData
+                                               scannedAt:date];
 }
 
 // MARK: - Initialization
@@ -70,11 +90,18 @@
     return nil;
 }
 
-- (_Nullable instancetype)initWithBcbp:(IBBcbp *const _Nonnull)bcbp scannedAt:(NSDate *_Nonnull)date;
+- (_Nullable instancetype)initWithPassengerName:(NSString *)passengerName
+                      electronicTicketIndicator:(unichar)electronicTicketIndicator
+                      dateOfIssueOfBoardingPass:(NSDate * _Nullable)dateOfIssueOfBoardingPass
+                                   securityData:(IBBoardingPassSecurityData *)securityData
+                                      scannedAt:(NSDate *)date;
 {
-    NSParameterAssert(bcbp != NULL);
+    NSParameterAssert(passengerName.length > 0);
+    NSParameterAssert(securityData != nil);
     NSParameterAssert(date != nil);
-    if (bcbp == nil || date == nil) {
+    if (passengerName.length == 0 ||
+        securityData == nil ||
+        date == nil) {
         return nil;
     }
 
@@ -83,10 +110,19 @@
         return nil;
     }
 
-    _bcbp = bcbp;
+    _passengerName = [passengerName copy];
+    _electronicTicketIndicator = electronicTicketIndicator;
+    _dateOfIssueOfBoardingPass = dateOfIssueOfBoardingPass;
+    _securityData = securityData;
     _scannedAt = date;
-    _securityData = [IBBoardingPassSecurityData securityDataWithBcbp:bcbp];
 
+    return self;
+}
+
+// MARK: - NSCopying
+
+- (id)copyWithZone:(NSZone *)zone;
+{
     return self;
 }
 
@@ -94,20 +130,19 @@
 
 - (NSUInteger)hash;
 {
-    return self.bcbp.hash;
-}
-
-- (instancetype)copy;
-{
-    return self;
+    return (self.scannedAt.hash ^
+            self.passengerName.hash ^
+            self.electronicTicketIndicator ^
+            self.dateOfIssueOfBoardingPass.hash ^
+            self.securityData.hash);
 }
 
 - (NSString *)debugDescription;
 {
-    return [NSString stringWithFormat:@"<%@:%p pass = %@>",
+    return [NSString stringWithFormat:@"<%@:%p with %d legs>",
         NSStringFromClass(self.class),
         (void *)self,
-        self.bcbp.debugDescription
+        0
     ];
 }
 
@@ -133,56 +168,26 @@
         return NO;
     }
 
-    // Nethier the Bcbp instance nor the reference date can be NULL or nil respectively.
-    BOOL const equalScannedAtDate = ([self.scannedAt compare:boardingPass.scannedAt] == NSOrderedSame);
-    BOOL const equalBcbp = [self.bcbp isEqualToBcbp:boardingPass.bcbp];
+    BOOL const hasEqualScannedAtDate =
+        (self.scannedAt == boardingPass.scannedAt) ||
+        ([self.scannedAt compare:boardingPass.scannedAt] == NSOrderedSame);
+    BOOL const hasEqualPassengerName =
+        (self.passengerName == boardingPass.passengerName) ||
+        [self.passengerName isEqualToString:boardingPass.passengerName];
+    BOOL const hasEqualElectronicTicketIndicator =
+        (self.electronicTicketIndicator == boardingPass.electronicTicketIndicator);
+    BOOL const hasEqualDateOfIssueOfBoardingPass =
+        (self.dateOfIssueOfBoardingPass == boardingPass.dateOfIssueOfBoardingPass) ||
+        ([self.dateOfIssueOfBoardingPass compare:boardingPass.dateOfIssueOfBoardingPass] == NSOrderedSame);
+    BOOL const hasEqualSecurityData =
+        (self.securityData == boardingPass.securityData) ||
+        [self.securityData isEqualToBoardingPassSecurityData:boardingPass.securityData];
 
-    return (equalScannedAtDate && equalBcbp);
-}
-
-// MARK: - Properties
-
-- (NSString *_Nonnull)passengerName;
-{
-    if (_passengerName != nil) {
-        return _passengerName;
-    } else {
-        NSString *const value = [self.bcbp fieldWithId:BCBP_FIELD_ID_PASSENGER_NAME];
-        self.passengerName = value;
-        return value;
-    }
-}
-
-- (unichar)electronicTicketIndicator;
-{
-    // This is a required field and therefore cannot be empty.
-    if (_electronicTicketIndicatorValue == nil) {
-        _electronicTicketIndicatorValue = [self.bcbp fieldWithId:BCBP_FIELD_ID_ELECTRONIC_TICKET_INDICATOR];
-    }
-
-    // An API error has led to the required electronic ticket indicator field being missing.
-    NSAssert(_electronicTicketIndicatorValue.length == 1, @"Required field missing: electronic ticket indicator");
-    if (_electronicTicketIndicatorValue.length != 1) {
-        return ' ';
-    }
-
-    return [_electronicTicketIndicatorValue characterAtIndex:0];
-}
-
-- (NSDate *_Nullable)dateOfIssueOfBoardingPass;
-{
-    if (_dateOfIssueOfBoardingPass != nil) {
-        return _dateOfIssueOfBoardingPass;
-    } else {
-        NSString *const julanRepresentation = [self.bcbp fieldWithId:BCBP_FIELD_ID_DATE_OF_ISSUE_OF_BOARDING_PASS];
-        if (julanRepresentation.length == 0) {
-            return nil;
-        }
-
-        NSDate *const date = [NSDate IB_dateWithFourDigitJulianString:julanRepresentation onOrBefore:self.scannedAt];
-        self.dateOfIssueOfBoardingPass = date;
-        return date;
-    }
+    return (hasEqualScannedAtDate &&
+            hasEqualPassengerName &&
+            hasEqualElectronicTicketIndicator &&
+            hasEqualDateOfIssueOfBoardingPass &&
+            hasEqualSecurityData);
 }
 
 @end

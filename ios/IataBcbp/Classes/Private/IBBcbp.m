@@ -51,9 +51,7 @@
 - (_Nullable instancetype)init;
 {
     [NSException raise:NSInternalInconsistencyException
-                format:@"%@ is not a supported initializer of %@",
-                       NSStringFromSelector(_cmd),
-                       NSStringFromClass(self.class)];
+                format:@"%s is not a supported initializer", __PRETTY_FUNCTION__];
 
     return nil;
 }

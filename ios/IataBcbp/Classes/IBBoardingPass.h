@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface IBBoardingPass : NSObject
+@interface IBBoardingPass : NSObject <NSCopying>
 
 /**
  @param passString An IATA BCBP type-M version 2-6 encoded, inclusive, boarding pass string.

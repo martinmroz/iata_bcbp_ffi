@@ -15,11 +15,11 @@
 {
     NSParameterAssert(string != nil);
     NSParameterAssert(date != nil);
-    
+
     if (!string.isEntirelyDecimalDigits || string.length != 4) {
         return nil;
     }
-    
+
     // Decode the year digit and the day from the four-digit Julian coded string.
     NSUInteger const encodedValue = (NSUInteger const)string.integerValue;
     NSUInteger const day = encodedValue % 1000;
