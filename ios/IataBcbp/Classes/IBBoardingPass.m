@@ -16,7 +16,7 @@
 
 // MARK: - Class Methods
 
-+ (_Nullable instancetype)boardingPassWithBcbpString:(NSString *_Nonnull)passString;
++ (_Nullable instancetype)boardingPassWithBcbpString:(NSString * _Nonnull)passString;
 {
     NSParameterAssert(passString != nil);
     if (passString.length == 0) {
@@ -26,7 +26,7 @@
     return [self boardingPassWithBcbpString:passString scannedAt:[NSDate date]];
 }
 
-+ (_Nullable instancetype)boardingPassWithBcbpString:(NSString *_Nonnull)passString scannedAt:(NSDate *_Nonnull)date;
++ (_Nullable instancetype)boardingPassWithBcbpString:(NSString * _Nonnull)passString scannedAt:(NSDate * _Nonnull)date;
 {
     NSParameterAssert(passString != nil);
     NSParameterAssert(date != nil);
@@ -42,7 +42,7 @@
     return [self boardingPassWithBcbp:bcbp scannedAt:date];
 }
 
-+ (_Nullable instancetype)boardingPassWithBcbp:(IBBcbp *_Nonnull)bcbp scannedAt:(NSDate *_Nonnull)date;
++ (_Nullable instancetype)boardingPassWithBcbp:(IBBcbp * _Nonnull)bcbp scannedAt:(NSDate * _Nonnull)date;
 {
     NSParameterAssert(bcbp != NULL);
     NSParameterAssert(date != nil);
@@ -119,6 +119,31 @@
     return self;
 }
 
+// MARK: - NSCoding
+
+- (instancetype)initWithCoder:(NSCoder *)coder;
+{
+    return [self initWithPassengerName:[coder decodeObjectOfClass:[NSString class] forKey:@"passengerName"]
+             electronicTicketIndicator:[coder decodeInt64ForKey:@"electronicTicketIndicator"]
+             dateOfIssueOfBoardingPass:[coder decodeObjectOfClass:[NSDate class] forKey:@"dateOfIssueOfBoardingPass"]
+                          securityData:[coder decodeObjectOfClass:[IBBoardingPassSecurityData class] forKey:@"securityData"]
+                             scannedAt:[coder decodeObjectOfClass:[NSDate class] forKey:@"scannedAt"]];
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder;
+{
+    [coder encodeObject:self.passengerName
+                 forKey:@"passengerName"];
+    [coder encodeInt64:self.electronicTicketIndicator
+                forKey:@"electronicTicketIndicator"];
+    [coder encodeObject:self.dateOfIssueOfBoardingPass
+                 forKey:@"dateOfIssueOfBoardingPass"];
+    [coder encodeObject:self.securityData
+                 forKey:@"securityData"];
+    [coder encodeObject:self.scannedAt
+                 forKey:@"scannedAt"];
+}
+
 // MARK: - NSCopying
 
 - (id)copyWithZone:(NSZone *)zone;
@@ -130,8 +155,7 @@
 
 - (NSUInteger)hash;
 {
-    return (self.scannedAt.hash ^
-            self.passengerName.hash ^
+    return (self.passengerName.hash ^
             self.electronicTicketIndicator ^
             self.dateOfIssueOfBoardingPass.hash ^
             self.securityData.hash);
@@ -168,9 +192,6 @@
         return NO;
     }
 
-    BOOL const hasEqualScannedAtDate =
-        (self.scannedAt == boardingPass.scannedAt) ||
-        ([self.scannedAt compare:boardingPass.scannedAt] == NSOrderedSame);
     BOOL const hasEqualPassengerName =
         (self.passengerName == boardingPass.passengerName) ||
         [self.passengerName isEqualToString:boardingPass.passengerName];
@@ -183,8 +204,7 @@
         (self.securityData == boardingPass.securityData) ||
         [self.securityData isEqualToBoardingPassSecurityData:boardingPass.securityData];
 
-    return (hasEqualScannedAtDate &&
-            hasEqualPassengerName &&
+    return (hasEqualPassengerName &&
             hasEqualElectronicTicketIndicator &&
             hasEqualDateOfIssueOfBoardingPass &&
             hasEqualSecurityData);

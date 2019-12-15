@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface IBBoardingPass : NSObject <NSCopying>
+@interface IBBoardingPass : NSObject <NSCoding, NSCopying>
 
 /**
  @param passString An IATA BCBP type-M version 2-6 encoded, inclusive, boarding pass string.
@@ -45,6 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  The reference date on which the boarding pass was scanned.
+ @note This does not affect equality or hash, however it does affect date-type values that do.
  */
 @property (nonatomic, strong, readonly) NSDate *scannedAt;
 
