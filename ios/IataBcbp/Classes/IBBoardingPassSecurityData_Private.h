@@ -1,10 +1,9 @@
-//
-//  IBBoardingPass.h
-//  IataBcbp
-//
-//  Created by Martin Mroz on 8/16/18.
-//  Copyright © 2019 Martin Mroz. All rights reserved.
-//
+/*
+ * Copyright (C) 2019 Martin Mroz
+ *
+ * This software may be modified and distributed under the terms
+ * of the MIT license. See the LICENSE file for details.
+ */
 
 #import <Foundation/Foundation.h>
 
