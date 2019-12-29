@@ -7,8 +7,6 @@
 
 #import <Foundation/Foundation.h>
 
-@class IBBoardingPassSecurityData;
-
 NS_ASSUME_NONNULL_BEGIN
 
 @interface IBBoardingPassLeg : NSObject <NSCoding, NSCopying>

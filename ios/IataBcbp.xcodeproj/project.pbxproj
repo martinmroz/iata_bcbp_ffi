@@ -35,6 +35,13 @@
 			remoteGlobalIDString = FD47884A2125F560000B8A5D;
 			remoteInfo = IataBcbp;
 		};
+		FD60CAAA23B7F9A30035B479 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FD4788422125F560000B8A5D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FD60CAA623B7F97B0035B479;
+			remoteInfo = iata_bcbp_ffi;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -176,6 +183,23 @@
 		};
 /* End PBXHeadersBuildPhase section */
 
+/* Begin PBXLegacyTarget section */
+		FD60CAA623B7F97B0035B479 /* iata_bcbp_ffi */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = FD60CAA923B7F97B0035B479 /* Build configuration list for PBXLegacyTarget "iata_bcbp_ffi" */;
+			buildPhases = (
+			);
+			buildToolPath = build_library.sh;
+			buildWorkingDirectory = .;
+			dependencies = (
+			);
+			name = iata_bcbp_ffi;
+			passBuildSettingsInEnvironment = 1;
+			productName = iata_bcbp_ffi;
+		};
+/* End PBXLegacyTarget section */
+
 /* Begin PBXNativeTarget section */
 		FD47884A2125F560000B8A5D /* IataBcbp */ = {
 			isa = PBXNativeTarget;
@@ -189,6 +213,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				FD60CAAB23B7F9A30035B479 /* PBXTargetDependency */,
 			);
 			name = IataBcbp;
 			productName = IataBcbp;
@@ -228,6 +253,9 @@
 					FD4788532125F560000B8A5D = {
 						CreatedOnToolsVersion = 9.3;
 					};
+					FD60CAA623B7F97B0035B479 = {
+						CreatedOnToolsVersion = 11.3;
+					};
 				};
 			};
 			buildConfigurationList = FD4788452125F560000B8A5D /* Build configuration list for PBXProject "IataBcbp" */;
@@ -245,6 +273,7 @@
 			targets = (
 				FD47884A2125F560000B8A5D /* IataBcbp */,
 				FD4788532125F560000B8A5D /* IataBcbpTests */,
+				FD60CAA623B7F97B0035B479 /* iata_bcbp_ffi */,
 			);
 		};
 /* End PBXProject section */
@@ -296,6 +325,11 @@
 			isa = PBXTargetDependency;
 			target = FD47884A2125F560000B8A5D /* IataBcbp */;
 			targetProxy = FD4788562125F560000B8A5D /* PBXContainerItemProxy */;
+		};
+		FD60CAAB23B7F9A30035B479 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FD60CAA623B7F97B0035B479 /* iata_bcbp_ffi */;
+			targetProxy = FD60CAAA23B7F9A30035B479 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -433,13 +467,13 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = ../target/universal/debug/;
+				LIBRARY_SEARCH_PATHS = "${BUILT_PRODUCTS_DIR}/iata_bcbp_ffi/lib";
 				OTHER_LDFLAGS = "-liata_bcbp_ffi";
 				PRODUCT_BUNDLE_IDENTIFIER = mm.IataBcbp;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = ../target;
+				USER_HEADER_SEARCH_PATHS = "${BUILT_PRODUCTS_DIR}/iata_bcbp_ffi/include";
 			};
 			name = Debug;
 		};
@@ -460,13 +494,13 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = ../target/universal/release/;
+				LIBRARY_SEARCH_PATHS = "${BUILT_PRODUCTS_DIR}/iata_bcbp_ffi/lib";
 				OTHER_LDFLAGS = "-liata_bcbp_ffi";
 				PRODUCT_BUNDLE_IDENTIFIER = mm.IataBcbp;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = ../target;
+				USER_HEADER_SEARCH_PATHS = "${BUILT_PRODUCTS_DIR}/iata_bcbp_ffi/include";
 			};
 			name = Release;
 		};
@@ -504,6 +538,36 @@
 			};
 			name = Release;
 		};
+		FD60CAA723B7F97B0035B479 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEBUGGING_SYMBOLS = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = B3T3LD75KL;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		FD60CAA823B7F97B0035B479 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = B3T3LD75KL;
+				MTL_FAST_MATH = YES;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -530,6 +594,15 @@
 			buildConfigurations = (
 				FD4788632125F560000B8A5D /* Debug */,
 				FD4788642125F560000B8A5D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FD60CAA923B7F97B0035B479 /* Build configuration list for PBXLegacyTarget "iata_bcbp_ffi" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FD60CAA723B7F97B0035B479 /* Debug */,
+				FD60CAA823B7F97B0035B479 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
